@@ -1,0 +1,118 @@
+			   TPM Quote Tools
+
+The TPM Quote Tools is a collection of programs that provide support
+for TPM based attestation using the TPM quote mechanism.  The manual
+page for tpm_quote_tools provides a usage overview.
+
+TPM Quote Tools has been tested with TrouSerS on Linux and NTRU on
+Windows XP.  It was ported to Windows using MinGW and MSYS.
+
+DEPENDENCIES
+
+This package requires the TSS TSPI libraries and the TPM tools.
+On Debian, the packages are:
+
+libtspi1      	  TCG Software Stack (library)
+libtspi-dev	  TCG Software Stack (development)
+trousers	  TCG Software Stack (daemon)
+tpm-tools	  Management tools for the TPM hardware (tools)
+
+On Red Hat Linux, the packages are:
+
+trousers      	  TCG Software Stack (library and daemon)
+trousers-devel	  TCG Software Stack (development)
+tpm-tools	  Management tools for the TPM hardware (tools)
+
+The manangement tools are only used to take ownership of a TPM.
+
+TO CONFIGURE AND BUILD
+
+$ ./configure
+$ make
+
+On Windows, if the name of the TSS library is not tspi, specify the
+library during configuration by defining LIBS.
+
+$ ./configure LIBS=-l<library>
+
+TO RUN:
+
+Make one UUID for all of your TPMs, and then on each machine, do the
+following.
+
+Ensure TPM driver is present with
+
+$ dmesg | grep tpm
+
+If nothing, sudo modprobe tpm_tis, and do check.
+
+If nothing, ensure your TPM is turned on in the BIOS setup.
+
+You can run the TPM daemon in the foreground with:
+
+$ sudo tcsd -f
+
+Start the daemon with:
+
+$ sudo /etc/init.d/trousers start
+
+To load the TPM driver at boot time, add the name of the driver on a
+separate line of text in the file /etc/modules.  The trousers daemon
+will be started for you at boot time.
+
+Next, make sure you have an endorsement key by running
+
+$ tpm_getpubek
+
+If you don't have one, run
+
+$ tpm_createek
+
+Be patient, it takes a while to create the key.
+
+I took ownership with the command:
+
+$ tpm_takeownership -y -z
+
+Now generate an AIK with tpm_mkaik, load and register the key with
+tpm_loadkey, generate a PCR composite hash with tpm_getpcrhash,
+produce a quote with tpm_getquote, and validate it with
+tpm_verifyquote.
+
+When getting the quote, make a nonce with:
+
+$ openssl sha1 -binary tpm_verifyquote > nonce
+
+REMOTE ACCESS
+
+Some TPM Quote Tools programs can access a TPM on a remote machine.
+To allow remote access to a TPM, the local daemon must allow both
+quote and loadkey operations.  For TrouSerS, add the folowing to
+/etc/tcsg.conf.
+
+	remote_ops = loadkey,quote
+
+TPM QUOTE VERSION
+
+By default, this package will use TPM quote 2 when available.  Use the
+configure option --without-tss12 to force the use of the original
+version of TPM quote.
+
+RED HAT PACKAGE BUILD
+
+Within a distribution, type:
+
+$ rpmbuild -ba tpm-quote-tools.spec
+
+DEBIAN PACKAGE BUILD
+
+Within a distribution, type:
+
+$ dh_make -s --createorig -c bsd -e "John D. Ramsdell <ramsdell@mitre.org>"
+$ cp control debian
+$ dpkg-buildpackage
+
+ACKNOWLEDGMENT
+
+Early on, code was inspired by Hal Finney's code on
+http://privacyca.com.

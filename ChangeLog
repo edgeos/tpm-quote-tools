@@ -1,0 +1,199 @@
+2013-03-23  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* config.guess, config.sub: Distribution rebuilt to support the
+	ARM 64 bit CPU architecture (aarch64).
+
+	* configure.ac: Tagged as tpm-quote-tools-1.0.2 with tag v1.0.2.
+
+2011-07-26  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* configure.ac: Tagged as 1.0.1.
+
+	* tpm-quote-tools.spec.in (Source0): Link to sf site.
+
+2011-07-14  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm-quote-tools.spec.in (URL): Link to SourceForge
+	development site.
+
+	* tpm-quote-tools.spec.in (Source0): Link to NEU site.
+
+	* tpm-quote-tools.spec.in (changelog): Quoted % in references to
+	macros.
+
+	* README: Noted that tpm-tools is only used to take ownership of a
+	tpm.
+
+2011-07-08  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm-quote-tools.spec.in: Fixed %changelog format
+
+	* tpm-quote-tools.spec.in: Removed use of %makeinstall
+
+2011-06-02  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm-quote-tools.spec.in: Added %changelog
+
+2011-03-09  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm-quote-tools.spec.in: Fix spec to meet Fedora standards.
+
+2011-01-19  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* configure.ac: Tagged as 1.0.
+
+2010-12-03  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tidy.c: Added support for ensuring resources associated with a
+	context are freed, and incorporated this support into the files
+	that contain the main function of a program.
+
+2010-11-17  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* configure.ac: Tagged as 0.9.
+
+	* *.c: Included stddef.h.  This fixes a compile time error for the
+	case in which trousers or iconv is not available.
+
+2010-11-15  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm_updatepcrhash.c (main): Allowed updates to a hash when the
+	PCR selection changes too.
+
+	* control: Added support for Debian packaging.
+
+	* tpm-quote-tools.spec.in: Added support for RPMs.
+
+2010-11-11  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm_updatepcrhash.c (main): Cleaned up the code that reads PCR
+	values from a file, and eliminated the use of GNU extensions.  The
+	code should now be accepted by any C99 compiler and be easier to
+	read.
+
+	The code reading the PCR file now checks to ensure it does not
+	contain two lines that specify the same PCR.  Such a file would
+	create a flawed hash value.
+
+	The code now uses TrouSerS hash updates that are specifically
+	designed for TPM_PCR_SELECTIONs and the like.  As a result, the
+	code no longer computes the blob associated with a PCR composite
+	hash, and then hashes that value, making the code more obvious.
+
+2010-11-09  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm_updatepcrhash.c (main): Corrected a flaw in the update hash
+	code that caused the newly computed composite hash to over write
+	the existing nonce instead of the old hash.
+
+2010-11-08  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* configure.ac: Added the --without-tss12 option to force the use
+	of the 1.1b version of TPM quote.
+
+	* tpm_getquote.c (main): Added the -p option that stores the PCR
+	values in a file.
+
+2010-11-05  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm_verifyquote.c (main): Removed connection request as there is
+	no need to connect to the TCG daemon while verifying a quote.
+
+	* configure.ac: Added test for the presence of TrouSerS.
+
+	* tpm_updatepcrhash.c: Added program for updating a hash.
+
+	* tpm_getpcrhash.c: This program now saves the PCR values is a
+	separate file.  Editing this file can be used to during the
+	process of updating a hash.
+
+2010-11-01  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* COPYING: Changed license to BSD.
+
+	* configure.ac: Tagged as 0.8.
+
+	* tpm_quote_tools.8: Expanded the description of the collection of
+	tools. 
+
+	* tpm_mkaik.c (main): Added support for TSS UNICODE encoding for
+	passwords.
+
+	* tpm_*.c: Added -h and -v options.  Changed the option used to
+	specify a remote host to -r so as to allow -h be the usual option
+	for help.
+
+2010-10-29  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* configure.ac: Tagged as 0.7.
+
+2010-10-28  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm_mkaik.c (getpasswd): Added an OpenSSL UI based password
+	reader when OpenSSL is available to get around a TrouSerS bug.
+
+	* tpm_mkaik.c (main): Fixed a bug in command line handling.  The
+	sense of the -z was reversed in the previous release, so that by
+	default, tpm_mkaik used the well known secret, and -z told it
+	request an owner secret.
+
+2010-10-27  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* configure.ac: Tagged as 0.6.
+
+	* Makefile.am (dist_man_MANS): Added manual pages.
+
+	* tpm_mkaik.c (main): Added the ability to query for the owner
+	secret.
+
+2010-10-26  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm_unloadkey.c: Added a program that unregisters a key.
+
+	* loadkey.c (loadkey): Removed spurious creation of a TPM handle.
+
+2010-09-13  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* configure.ac: Tagged as 0.5.
+
+	* quote.c (quote): Use Tspi_TPM_Quote2 when HAVE_TSS_12_LIB is
+	defined. 
+
+2010-07-20  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* takeownership.c (main): Routine gets the EK and supplies it to
+	the takeownership call rather than using the null handle so as to
+	get around a bug in NTRU's tsp1.dll.
+
+2010-07-01  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* configure.ac: Tagged as 0.3.
+
+2010-05-22  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* configure.ac: Added support for MinGW and Cygwin platforms.
+
+	* tpm_getpcrhash.c (main): Added an option so that one can supply
+	the name of a host as a UTF-16LE string for Tspi_Context_Connect.
+
+2010-03-17  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm_loadkey.c (main): Added a program that just loads a key.
+
+	* tpm_verifyquote.c (main): Program accepts the quote from
+	standard input as well as from a file.
+
+2010-03-16  John D. Ramsdell  <ramsdell@mitre.org>
+
+	* tpm_getquote.c (main): Added an option so that one can supply
+	the name of a host as a UTF-16LE string for Tspi_Context_Connect.
+
+	* get_num_pcrs.c: Removed this file, which contained a
+	TPM_GetCapability request for the number of PCRs.  Why pay the
+	price for an extra transaction when a later quote request will
+	fail when given a bad PCR mask?
+
+	* quote.c (quote): Removed the call to get_num_pcrs and the call
+	to check_pcr_mask.
+
+	* pcr_mask.c: Removed function check_pcr_mask.

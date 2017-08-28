@@ -1,0 +1,40 @@
+.TH "VERIFY TPM QUOTE" 8 "Oct 2010" "" ""
+.SH NAME
+tpm_verifyquote
+.SH SYNOPSIS
+.B tpm_verifyquote
+.RB [ \-hv ]
+.RI PUBKEY-FILE
+.RI HASH-FILE
+.RI NONCE-FILE
+.RI [QUOTE-FILE]
+.br
+.SH DESCRIPTION
+.PP
+The program verifies the signature produced by a TPM quote in the
+file
+.RI QUOTE-FILE,
+or when absent, the quote read from standard input.
+The file
+.RI PUBKEY-FILE
+contains the public key used to validate the signature.
+The file
+.RI HASH-FILE
+contains the signed data generated using the same key and Platform
+Configuration Registers used to generate the quote.
+Critically, the signed data includes the PCR composite hash used to
+validate that the PCRs contain their expected values.
+The file
+.RI NONCE-FILE
+contains the nonce used to generate the quote.
+.TP
+.RB \-h
+Display command usage info.
+.TP
+.RB \-v
+Display command version info.
+.SH "SEE ALSO"
+.BR tpm_quote_tools "(8),"
+.BR tpm_mkaik "(8),"
+.BR tpm_getpcrhash "(8),"
+.BR tpm_getquote "(8)"

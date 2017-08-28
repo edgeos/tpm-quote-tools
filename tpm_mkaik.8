@@ -1,0 +1,44 @@
+.TH "MAKE TPM AIK" 8 "Oct 2010" "" ""
+.SH NAME
+tpm_mkaik
+.SH SYNOPSIS
+.B tpm_mkaik
+.RB [ \-zuhv ]
+.RI BLOB-FILE
+.RI PUBKEY-FILE
+.br
+.SH DESCRIPTION
+.PP
+The program generates a TPM Attestation Identity Key and stores it in
+the file
+.RI BLOB-FILE.
+The public key is stored in the file
+.RI PUBKEY-FILE.
+The public key is DER encoded.
+.TP
+.RB \-z
+Use the well known secret used as the owner secret.
+.TP
+.RB \-u
+Use TSS UNICODE encoding for passwords.
+.TP
+.RB \-h
+Display command usage info.
+.TP
+.RB \-v
+Display command version info.
+.SH BUGS
+.PP
+Sometimes, when
+.B tpm_mkaik
+is invoked without the
+.RB \-z
+option, no password prompt appears.  As a work around, use
+.B tpm_changeownerauth
+to set the secret to the well known one, generate the key, and then
+use
+.B tpm_changeownerauth
+to set the secret to its original value.
+.SH "SEE ALSO"
+.BR tpm_quote_tools "(8),"
+.BR tpm_changeownerauth "(8)"

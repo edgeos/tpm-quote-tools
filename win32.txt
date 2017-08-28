@@ -1,0 +1,17 @@
+Notes when trying to use these with Windows XP:
+
+0. Make sure TPM is turned on, and (possibly) "activate security" is also
+turned on (both in the BIOS; in different menus for mine).
+
+1. To allow remote quotes with NTRU's TSS, in the registry set
+HKEY_LOCAL_MACHINE\Software\NTRU Cryptosystems\TSS\allowRemoteRPC to 1
+HKEY_LOCAL_MACHINE\Software\NTRU Cryptosystems\TSS\allowRemoteSOAP to 1
+HKEY_LOCAL_MACHINE\Software\NTRU Cryptosystems\TSS\allowSOAPTCS to 1
+	1.1 Currently with NTRU's TSS, doing things remotely (whether sending or
+		receiving the request) does not work. It will set up the TCP
+		connection, do nothing for 10 seconds, then close the connection. This
+		has been reported to NTRU.
+
+2. To get the iconv.h file, download libiconv from GNU, compile and install it.
+	2.1 Make sure the folder with iconv.h is on the include path.
+	2.2 Add -llibcharset and -liconv to LIBS parameter in configure script

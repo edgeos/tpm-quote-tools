@@ -1,0 +1,26 @@
+.TH "UNLOAD TPM KEY" 8 "Oct 2010" "" ""
+.SH NAME
+tpm_unloadkey
+.SH SYNOPSIS
+.B tpm_loadkey
+.RB [ \-r\ HOST ]
+.RB [ \-hv ]
+.RI UUID-FILE
+.br
+.SH DESCRIPTION
+.PP
+The program unregisters the key associated with the UUID in
+.RI UUID-FILE.
+.TP
+.RB \-r\ HOST
+Perform operation on remote
+.RB HOST.
+.TP
+.RB \-h
+Display command usage info.
+.TP
+.RB \-v
+Display command version info.
+.SH "SEE ALSO"
+.BR tpm_quote_tools "(8),"
+.BR tpm_loadkey "(8)"

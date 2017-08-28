@@ -1,0 +1,47 @@
+TPM QUOTE TOOLS NEWS -- history of user-visible changes.
+
+* Changes in version 1.0
+   This is a bug fix release with no user-visible changes.
+
+* Changes in version 0.9
+
+** Added tmp_updatepcrhash program which updates a PCR hash
+
+** tpm_qetquote now optionally stores the PCR values in a file
+
+** License changed to BSD
+
+* Changes in version 0.8
+
+** Command line options regularized
+   All programs now accept the -h and -v options.  The flag for remote
+   host access has been changed to -r so that -h can be used for help.
+
+** Unicode option for tpm_mkaik
+   The -u option for tpm_mkaik provides support for TSS UNICODE
+   encoding of owner passwords.
+
+** Manual page improvements
+   The overview manual page has been expanded.
+
+* Changes in version 0.7
+
+** Program tpm_mkaik gets passwords using OpenSSL
+   When OpenSSL GUI support is available, tpm_mkaik uses it to prompt
+   for the owner password.  This fixes a bug in the previous version.
+
+* Changes in version 0.6
+
+** Program tpm_mkaik has the ability to query for the owner secret
+   When TrouSerS is compiled without GUI support, no passwort prompt
+   appears, and an error is generated.  In this case, the owner secret
+   must be the well known secret.
+
+** There are manual pages for each program
+
+** Program tpm_unloadkey added
+   Added a program that unregisters a binding between a UUID and a key.
+
+Local variables:
+mode:outline
+End:

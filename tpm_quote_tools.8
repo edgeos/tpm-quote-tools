@@ -1,0 +1,84 @@
+.TH "TPM QUOTE TOOLS" 8 "Oct 2010" "" ""
+.SH NAME
+TPM Quote Tools
+.SH PROGRAMS
+.B tpm_mkuuid,
+.B tpm_mkaik,
+.B tpm_loadkey,
+.B tpm_unloadkey,
+.B tpm_getpcrhash,
+.B tpm_updatepcrhash,
+.B tpm_getquote,
+.B tpm_verifyquote
+.br
+.SH DESCRIPTION
+.PP
+TPM Quote Tools is a collection of programs that provide support
+for TPM based attestation using the TPM quote operation.
+.PP
+A TPM contains a set of Platform Configuration Registers (PCRs).  In a
+well configured machine, some of these registers are set to known
+values during the boot up process or at other times.  For example, a
+PCR might contain the hash of a boot loader in memory before it is
+run.
+.PP
+The TPM quote operation is used to authoritatively verify the contents
+of a TPM's Platform Configuration Registers (PCRs).  During
+provisioning, a composite hash of a selected set of PCRs is computed.
+The TPM quote operation produces a composite hash that can be compared
+with the one computed while provisioning.
+.PP
+To use the TPM quote operation, keys must be generated.  During
+provisioning, an Attestation Identity Key (AIK) is generated for each
+TPM, and the public part of the key is made available to entities that
+validate quotes.
+.PP
+The TPM quote operation returns signed data and a signature.  The data
+that is signed contains the PCRs selected for the operation, the
+composite hash for the selected PCRs, and a nonce provided as input,
+and used to prevent replay attacks.  At provisioning time, the data
+that is signed is stored, not just the composite hash.  The signature
+is discarded.
+.PP
+An entity that wishes to evaluate a machine generates a nonce, and
+sends it along with the set of PCR used to generate the composite PCR
+hash at provisioning time.  For this use of the TPM quote operation,
+the signed data is ignored, and the signature returned is used to
+validate the state of the TPM's PCRs.  Given the signature, the
+evaluating entity replaces the nonce in the signed data generated at
+provisioning time, and checks to see if the signature is valid for
+the data.  If so, this check ensures the selected PCRs contain values
+that match the ones measured during provisioning.
+.PP
+A typical scenario for an enterprise using these tools follows.  The
+tools expect AIKs to be referenced via one enterprise-wide Universally
+Unique Identifier (UUID).  The program
+.B tpm_mkuuid
+creates one.
+.PP
+For each machine being checked, an AIK is created using
+.B tpm_mkaik.
+The key blob produced is bound to the UUID on its machine using
+.B tpm_loadkey.
+The public key associated with the AIK is sent to the entities that
+verify quotes.  Finally, the expected PCR composite hash is
+obtained using
+.B tpm_getpcrhash.
+When the expected PCR values change, a new hash can be generated with
+.B tpm_updatepcrhash.
+.PP
+The program to obtain a quote, and thus measure the current state of
+the PCRs is
+.B tpm_getquote.
+The program that verifies the quote describes the same
+PCR composite hash as was measured initially is
+.B tpm_verifyquote.
+.SH "SEE ALSO"
+.BR tpm_mkuuid "(8),"
+.BR tpm_mkaik "(8),"
+.BR tpm_loadkey "(8),"
+.BR tpm_unloadkey "(8),"
+.BR tpm_getpcrhash "(8),"
+.BR tpm_updatepcrhash "(8),"
+.BR tpm_getquote "(8),"
+.BR tpm_verifyquote "(8)"

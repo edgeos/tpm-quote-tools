@@ -1,0 +1,13 @@
+Source: tpm-quote-tools
+Section: admin
+Priority: optional
+Maintainer: John D. Ramsdell <ramsdell@mitre.org>
+Build-Depends: debhelper (>= 7), autotools-dev, libtspi-dev
+Standards-Version: 3.8.3
+
+Package: tpm-quote-tools
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libtspi1
+Description: TPM-based attestation using the TPM quote operation (tools)
+ TPM Quote Tools is a collection of programs that provide support
+ for TPM based attestation using the TPM quote operation.

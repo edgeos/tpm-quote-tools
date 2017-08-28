@@ -1,0 +1,42 @@
+.TH "GET TPM PCR HASH" 8 "Oct 2010" "" ""
+.SH NAME
+tpm_getpcrhash
+.SH SYNOPSIS
+.B tpm_getpcrhash
+.RB [ \-r\ HOST ]
+.RB [ \-hv ]
+.RI UUID-FILE
+.RI HASH-FILE
+.RI PCR-VALUE-FILE
+.RI PCRS
+.br
+.SH DESCRIPTION
+.PP
+The program returns the signed data produced by a TPM quote in the
+file
+.RI HASH-FILE
+and the list of Platform Configuration Register values in the file
+.RI PCR-VALUE-FILE.
+.RI PCRS
+is a sequence of integers that specify the Platform Configuration
+Registers used to produce the signed data.  The key used for the
+operation is the one registered under the UUID in
+.RI UUID-FILE.
+The nonce used while quoting is unpredictable.  The nonce field in the
+signed data is ignored when using the signed data to verify a quote.
+.TP
+.RB \-r\ HOST
+Perform operation on remote
+.RB HOST.
+.TP
+.RB \-h
+Display command usage info.
+.TP
+.RB \-v
+Display command version info.
+.SH "SEE ALSO"
+.BR tpm_quote_tools "(8),"
+.BR tpm_loadkey "(8),"
+.BR tpm_getquote "(8),"
+.BR tpm_verifyquote "(8),"
+.BR tpm_updateprchash "(8)"

@@ -1,0 +1,45 @@
+.TH "GET TPM QUOTE" 8 "Oct 2010" "" ""
+.SH NAME
+tpm_getquote
+.SH SYNOPSIS
+.B tpm_getquote
+.RB [ \-r\ HOST ]
+.RB [ \-p\ PCR-VALUES-FILE ]
+.RB [ \-hv ]
+.RI UUID-FILE
+.RI NONCE-FILE
+.RI QUOTE-FILE
+.RI PCRS
+.br
+.SH DESCRIPTION
+.PP
+The program returns the signature produced by a TPM quote in the
+file
+.RI QUOTE-FILE.
+.RI PCRS
+is a sequence of integers that specify the Platform Configuration
+Registers used to produce the signature.  The key used for the
+operation is the one registered under the UUID in
+.RI UUID-FILE.
+The nonce used is taken from the file
+.RI NONCE-FILE.
+.TP
+.RB \-r\ HOST
+Perform operation on remote
+.RB HOST.
+.TP
+.RB \-p\ PCR-VALUE-FILE
+Store the current 
+list of PCR values in
+.RI PCR-VALUE-FILE.
+.TP
+.RB \-h
+Display command usage info.
+.TP
+.RB \-v
+Display command version info.
+.SH "SEE ALSO"
+.BR tpm_quote_tools "(8),"
+.BR tpm_loadkey "(8),"
+.BR tpm_getpcrhash "(8),"
+.BR tpm_verifyquote "(8)"
